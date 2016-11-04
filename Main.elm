@@ -14,12 +14,14 @@ main =
 
 
 type alias Model =
-    {}
+    { sizeInGb : Int
+    }
 
 
 model : Model
 model =
-    {}
+    { sizeInGb = 0
+    }
 
 
 
