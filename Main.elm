@@ -2,6 +2,9 @@ module Main exposing (..)
 
 import Html exposing (..)
 import Html.App as App
+import Html.Attributes exposing (placeholder)
+import Html.Events exposing (onInput)
+import String exposing (toInt)
 
 
 main : Program Never
@@ -29,12 +32,19 @@ model =
 
 
 type Msg
-    = Nothing
+    = UpdateSize String
 
 
 update : Msg -> Model -> Model
 update msg model =
-    model
+    case msg of
+        UpdateSize text ->
+            case toInt text of
+                Err msg ->
+                    model
+
+                Ok val ->
+                    { model | sizeInGb = val }
 
 
 
@@ -43,4 +53,7 @@ update msg model =
 
 view : Model -> Html Msg
 view model =
-    div [] []
+    div []
+        [ input [ onInput UpdateSize, placeholder "Drive size in GB" ] []
+        , div [] [ text (toString model.sizeInGb) ]
+        ]
